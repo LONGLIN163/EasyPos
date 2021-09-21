@@ -48,7 +48,7 @@ export default {
     }
     .fa{
         font-size: 24px;
-    }
+    } 
     .leftNav ul{
         padding: 0px;
         margin: 0px;
