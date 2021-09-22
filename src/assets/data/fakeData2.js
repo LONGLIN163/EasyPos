@@ -1,5 +1,4 @@
-{
-  "data": [
+const fakeData2=[
     {
       "1": {
         "articleId": 1,
@@ -68,5 +67,6 @@
         "price": 80
       }
     }
-  ]
-}
+]
+
+export default fakeData2;

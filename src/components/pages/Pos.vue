@@ -47,10 +47,11 @@
             </div>
           <div class="article-type">
             <el-tabs stretch>
-              <el-tab-pane label="fastfood">
+
+              <el-tab-pane label="Salad">
                 <div>
                   <ul class='cookList'>
-                      <li v-for="item in type0Articles" :key="item.id">
+                      <li v-for="item in type0Articles" :key="item.articleId">
                           <span class="foodImg">
                             <img :src="item.articleImg" width="100%">
                           </span>
@@ -63,11 +64,59 @@
                       </li>
                   </ul>
                 </div>
-                
               </el-tab-pane>
-              <el-tab-pane label="snacks">snacks</el-tab-pane>
-              <el-tab-pane label="drinks">drinks</el-tab-pane>
-              <el-tab-pane label="menu">menu</el-tab-pane>
+              <el-tab-pane label="Menu">
+                <div>
+                  <ul class='cookList'>
+                      <li v-for="item in type1Articles" :key="item.articleId">
+                          <span class="foodImg">
+                            <img :src="item.articleImg" width="100%">
+                          </span>
+                          <span class="foodName">
+                            <p>
+                              {{item.articleName}}
+                            </p>
+                            <p class="foodPrice">{{item.price}}€</p>
+                          </span>
+                      </li>
+                  </ul>
+                </div>
+              </el-tab-pane>
+              <el-tab-pane label="Drinks">
+                <div>
+                  <ul class='cookList'>
+                      <li v-for="item in type2Articles" :key="item.articleId">
+                          <span class="foodImg">
+                            <img :src="item.articleImg" width="100%">
+                          </span>
+                          <span class="foodName">
+                            <p>
+                              {{item.articleName}}
+                            </p>
+                            <p class="foodPrice">{{item.price}}€</p>
+                          </span>
+                      </li>
+                  </ul>
+                </div>
+              </el-tab-pane>
+              <el-tab-pane label="Pastries">
+                <div>
+                  <ul class='cookList'>
+                      <li v-for="item in type3Articles" :key="item.articleId">
+                          <span class="foodImg">
+                            <img :src="item.articleImg" width="100%">
+                          </span>
+                          <span class="foodName">
+                            <p>
+                              {{item.articleName}}
+                            </p>
+                            <p class="foodPrice">{{item.price}}€</p>
+                          </span>
+                      </li>
+                  </ul>
+                </div>
+              </el-tab-pane>
+
             </el-tabs>
           </div>
         </el-col>
@@ -79,6 +128,8 @@
 <script>
 //import leftNav from "@/components/common/leftNav.vue"
 import axios from "axios"
+import fakeData2 from "../../assets/data/fakeData2.js"
+ 
 export default {
   name: 'pos',
   data(){
@@ -100,28 +151,31 @@ export default {
         price: 8,
         quantity:1
       }],
-      hotSells:[
-        // {
-        // articleName: 'hahahahahhaha',
-        // price: 8,
-        // quantity:1
-        // },
-      ],
+      hotSells:[],
       type0Articles:[],
       type1Articles:[],
       type2Articles:[],
-      type3Articles:[],
+      type3Articles:[]
     }
   },
   created:function(){
+    // ******get hot sell product******
     axios.get('https://mocki.io/v1/2ad1210f-5e1f-4cf0-b855-93250112feb4')
     .then( (res) => {
-      console.log(res)
       this.hotSells=res.data.data;
+       //console.log(this.hotSells)
     })
     .catch( (err) => {
-      console.log(err)
+      alert("Request data failed, Internet error!")
     })
+    // ******get type0Articles product******
+    // ******mocki can not handles complex api, use local fake data ******
+    console.log(fakeData2)
+    this.type0Articles=fakeData2[0]
+    this.type1Articles=fakeData2[1]
+    this.type2Articles=fakeData2[2]
+    this.type3Articles=fakeData2[3]
+
   },
   mounted:function(){
     var orderHeight=document.body.clientHeight;
@@ -191,7 +245,7 @@ export default {
        display: block;
        text-align: center;
        font-size: 14px;
-       padding-top:10px;
+       padding-top:0px;
        color:rgb(0, 0, 0);
 
    }
