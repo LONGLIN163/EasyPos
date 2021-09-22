@@ -1,0 +1,54 @@
+{
+    "data": [
+      {
+        "articleId": 1,
+        "articleName": "Vegetable Salad",
+        "price": 18
+      },
+      {
+        "articleId": 2,
+        "articleName": "Vegetable Sandwich",
+        "price": 15
+      },
+      {
+        "articleId": 3,
+        "articleName": "Grilled Barbecue",
+        "price": 15
+      },
+      {
+        "articleId": 4,
+        "articleName": "Rice and Tacos",
+        "price": 80
+      },
+      {
+        "articleId": 5,
+        "articleName": "Red Curry noodle",
+        "price": 10
+      },
+      {
+        "articleId": 6,
+        "articleName": "Mushroom pizza",
+        "price": 20
+      },
+      {
+        "articleId": 7,
+        "articleName": "Beef burger",
+        "price": 10
+      },
+      {
+        "articleId": 8,
+        "articleName": "Green Sandwich",
+        "price": 18
+      },
+      {
+        "articleId": 9,
+        "articleName": "Cocktail",
+        "price": 15
+      },
+      {
+        "articleId": 20,
+        "articleName": "Cereal yogurt",
+        "price": 17
+      }
+    ]
+  }

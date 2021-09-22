@@ -38,7 +38,7 @@
               <div class="title">Hot Sell</div>
               <div class="hot-sells-list">
                   <ul>
-                      <li v-for="item in hotSells" :key="item.index">
+                      <li v-for="item in hotSells" :key="item.id">
                         <span>{{item.articleName}}</span>
                         <span class="hot-price">{{item.price}}€</span>
                       </li>
@@ -78,6 +78,7 @@
 
 <script>
 //import leftNav from "@/components/common/leftNav.vue"
+import axios from "axios"
 export default {
   name: 'pos',
   data(){
@@ -100,113 +101,27 @@ export default {
         quantity:1
       }],
       hotSells:[
-        {
-        articleName: 'hahahahahhaha',
-        price: 8,
-        quantity:1
-        },
-        {
-        articleName: 'hahahahahhaha',
-        price: 8,
-        quantity:1
-        },
-        {
-        articleName: 'hahahahahhaha',
-        price: 8,
-        quantity:1
-        },
-        {
-        articleName: 'hahahahahhaha',
-        price: 8,
-        quantity:1
-        },
-        {
-        articleName: 'hahahahahhaha',
-        price: 8,
-        quantity:1
-        },
-        {
-        articleName: 'hahahahahhaha',
-        price: 8,
-        quantity:1
-        },
-        {
-        articleName: 'hahahahahhaha',
-        price: 8,
-        quantity:1
-        },
-        {
-        articleName: 'hahahahahhaha',
-        price: 8,
-        quantity:1
-        },
-        {
-        articleName: 'hahahahahhaha',
-        price: 8,
-        quantity:1
-        },
-        {
-        articleName: 'hahahahahhaha',
-        price: 8,
-        quantity:1
-        },
-        {
-        articleName: 'hahahahahhaha',
-        price: 8,
-        quantity:1
-        },
-        {
-        articleName: 'hahahahahhaha',
-        price: 8,
-        quantity:1
-        },
-        {
-        articleName: 'hahahahahhaha',
-        price: 8,
-        quantity:1
-        }
+        // {
+        // articleName: 'hahahahahhaha',
+        // price: 8,
+        // quantity:1
+        // },
       ],
-      type0Articles:[
-          {
-              articleId:1,
-              articleImg:"https://images.pexels.com/photos/5710170/pexels-photo-5710170.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-              articleName:'noodleeeee',
-              price:18
-          }, 
-          {
-              articleId:1,
-              articleImg:"https://images.pexels.com/photos/2282528/pexels-photo-2282528.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-              articleName:'noodleeeee',
-              price:18
-          }, 
-          {
-              articleId:1,
-              articleImg:"https://images.pexels.com/photos/5710170/pexels-photo-5710170.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-              articleName:'noodleeeee',
-              price:18
-          }, 
-          {
-              articleId:1,
-              articleImg:"https://images.pexels.com/photos/2282528/pexels-photo-2282528.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-              articleName:'noodleeeee',
-              price:18
-          }, 
-          {
-              articleId:1,
-              articleImg:"https://images.pexels.com/photos/5710170/pexels-photo-5710170.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-              articleName:'noodleeeee',
-              price:18
-          }, 
-          {
-              articleId:1,
-              articleImg:"https://images.pexels.com/photos/2282528/pexels-photo-2282528.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-              articleName:'noodleeeee',
-              price:18
-          }, 
-
-
-      ],
+      type0Articles:[],
+      type1Articles:[],
+      type2Articles:[],
+      type3Articles:[],
     }
+  },
+  created:function(){
+    axios.get('https://mocki.io/v1/2ad1210f-5e1f-4cf0-b855-93250112feb4')
+    .then( (res) => {
+      console.log(res)
+      this.hotSells=res.data.data;
+    })
+    .catch( (err) => {
+      console.log(err)
+    })
   },
   mounted:function(){
     var orderHeight=document.body.clientHeight;
