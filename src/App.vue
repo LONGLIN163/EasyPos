@@ -29,7 +29,7 @@
     .main{
       float:left;
       width:95%;
-      background-color: rgb(175, 171, 171);
+      background-color: rgb(233, 233, 233);
       height: 100%;
       overflow: hidden;
     }
