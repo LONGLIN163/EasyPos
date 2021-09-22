@@ -16,12 +16,15 @@
                     <el-table-column prop="quantity" label="Quantity" width="80"></el-table-column>
                     <el-table-column prop="price" label="Price" width="70"></el-table-column>
                     <el-table-column label="action" width="100" fixed="right">
-                      <template slot-scope>
-                        <el-button type="text" size="small">Add</el-button>
+                      <template slot-scope="scope">
+                        <el-button type="text" size="small" @click="addOrderList(scope.row)">Add</el-button>
                         <el-button type="text" size="small">Min</el-button>
                       </template>
                     </el-table-column>
                 </el-table>
+                <div class="totalDiv">
+                  <small>Amount:</small>{{totalQuantity}} &nbsp;&nbsp;&nbsp; <small>Total:</small>{{totalPrice}}€
+                </div>
                 <div class="order-status">
                   <el-button type="warning">Pending</el-button>
                   <el-button type="danger">Del</el-button>
@@ -38,7 +41,7 @@
               <div class="title">Hot Sell</div>
               <div class="hot-sells-list">
                   <ul>
-                      <li v-for="item in hotSells" :key="item.id">
+                      <li v-for="item in hotSells" :key="item.id" @click="addOrderList(item)">
                         <span>{{item.articleName}}</span>
                         <span class="hot-price">{{item.price}}€</span>
                       </li>
@@ -51,7 +54,7 @@
               <el-tab-pane label="Salad">
                 <div>
                   <ul class='cookList'>
-                      <li v-for="item in type0Articles" :key="item.articleId">
+                      <li v-for="item in type0Articles" :key="item.articleId" @click="addOrderList(item)">
                           <span class="foodImg">
                             <img :src="item.articleImg" width="100%">
                           </span>
@@ -68,7 +71,7 @@
               <el-tab-pane label="Menu">
                 <div>
                   <ul class='cookList'>
-                      <li v-for="item in type1Articles" :key="item.articleId">
+                      <li v-for="item in type1Articles" :key="item.articleId" @click="addOrderList(item)">
                           <span class="foodImg">
                             <img :src="item.articleImg" width="100%">
                           </span>
@@ -85,7 +88,7 @@
               <el-tab-pane label="Drinks">
                 <div>
                   <ul class='cookList'>
-                      <li v-for="item in type2Articles" :key="item.articleId">
+                      <li v-for="item in type2Articles" :key="item.articleId" @click="addOrderList(item)">
                           <span class="foodImg">
                             <img :src="item.articleImg" width="100%">
                           </span>
@@ -102,7 +105,7 @@
               <el-tab-pane label="Pastries">
                 <div>
                   <ul class='cookList'>
-                      <li v-for="item in type3Articles" :key="item.articleId">
+                      <li v-for="item in type3Articles" :key="item.articleId" @click="addOrderList(item)">
                           <span class="foodImg">
                             <img :src="item.articleImg" width="100%">
                           </span>
@@ -134,28 +137,14 @@ export default {
   name: 'pos',
   data(){
     return {
-      tableData:[{
-        articleName: 'xixi',
-        price: 8,
-        quantity:1
-      }, {
-        articleName: 'haha',
-        price: 15,
-        quantity:1
-      }, {
-        articleName: 'hehe',
-        price: 8,
-        quantity:1
-      }, {
-        articleName: 'hehe',
-        price: 8,
-        quantity:1
-      }],
+      tableData:[],
       hotSells:[],
       type0Articles:[],
       type1Articles:[],
       type2Articles:[],
-      type3Articles:[]
+      type3Articles:[],
+      totalQuantity:0,
+      totalPrice:0
     }
   },
   created:function(){
@@ -170,7 +159,7 @@ export default {
     })
     // ******get type0Articles product******
     // ******mocki can not handles complex api, use local fake data ******
-    console.log(fakeData2)
+    //console.log(fakeData2)
     this.type0Articles=fakeData2[0]
     this.type1Articles=fakeData2[1]
     this.type2Articles=fakeData2[2]
@@ -181,6 +170,39 @@ export default {
     var orderHeight=document.body.clientHeight;
     console.log(orderHeight)
     document.getElementById("order-list").style.height=orderHeight+'px';
+  },
+  methods:{
+          addOrderList(articleObj){
+            this.totalQuantity=0; 
+            this.totalPrice=0;
+            let isHas=false;
+            for (let i=0; i<this.tableData.length;i++){
+                console.log(this.tableData[i].articleId);
+                if(this.tableData[i].articleId==articleObj.articleId){
+                    isHas=true; 
+                }
+            }
+            if(isHas){
+                 let arr = this.tableData.filter(o =>o.articleId == articleObj.articleId);
+                 arr[0].quantity++;
+                 console.log(arr); 
+            }else{
+                let newArticle={
+                  articleId:articleObj.articleId,
+                  articleName:articleObj.articleName,
+                  price:articleObj.price,
+                  quantity:1
+                };
+                this.tableData.push(newArticle);
+            }
+
+            this.tableData.forEach((element) => {
+                this.totalQuantity+=element.quantity;
+                this.totalPrice=this.totalPrice+(element.price*element.quantity);   
+            });
+
+      }
+
   }
 }
 </script>
@@ -201,6 +223,11 @@ export default {
   background-color: #F9FAFC;
   padding:10px;
 }
+.totalDiv{
+  background-color: #fff;
+  padding: 10px;
+  border-bottom: 1px solid #D3DCE6;
+}
 .hot-sells ul li{
   list-style: none;
   float:left;
@@ -208,6 +235,7 @@ export default {
   padding:10px;
   margin:5px;
   background-color:#fff;
+  cursor: pointer;
 }
 .hot-price{
   color:#58B7FF; 
@@ -225,6 +253,7 @@ export default {
        padding: 2px;
        float:left;
        margin: 2px;
+       cursor: pointer;
 
    }
    .cookList li span{
