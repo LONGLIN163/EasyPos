@@ -26,14 +26,14 @@
                   <small>Amount:</small>{{totalQuantity}} &nbsp;&nbsp;&nbsp; <small>Total:</small>{{totalPrice}}€
                 </div>
                 <div class="order-status">
-                  <el-button type="warning">Pending</el-button>
+                  <el-button type="warning" @click="penArticles">Pending</el-button>
                   <el-button type="danger" @click="delAllArticles">Del All</el-button>
-                  <el-button type="success">Check out</el-button>
+                  <el-button type="success" @click="checkout">Check out</el-button>
                 </div>
 
               </el-tab-pane>
-              <el-tab-pane label="Pending" name="second">配置管理</el-tab-pane>
-              <el-tab-pane label="Delievery" name="third">角色管理</el-tab-pane> 
+              <el-tab-pane label="Pending" name="second">in progress...</el-tab-pane>
+              <el-tab-pane label="Delievery" name="third">in progress...</el-tab-pane> 
             </el-tabs>
         </el-col>
         <el-col :span='17'>
@@ -206,6 +206,24 @@ export default {
       this.tableData=[];
       this.totalQuantity=0;
       this.totalPrice=0;
+    },
+    //simulate checkout func
+    checkout(){
+      if (this.totalQuantity!=0) {
+          this.tableData = [];
+          this.totalQuantity = 0;
+          this.totalPrice = 0;
+          this.$message({
+              message: 'Checkout success, get your food soon!!!',
+              type: 'success'
+          });
+
+      }else{
+          this.$message.error('Can not be empty!!!');
+      }
+    },
+    penArticles(){
+        this.$message.error('I have no idea!!!');
     },
     getAll(){
       this.totalQuantity=0; 

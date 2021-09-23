@@ -18,10 +18,6 @@
                  <div>VIP</div>
             </li>
             <li>
-                 <i class="fa fa-vcard"></i>
-                 <div>VIP</div>
-            </li>
-            <li>
                  <i class="fa fa-calculator" aria-hidden="true"></i>
                  <div>Set</div>
             </li>
