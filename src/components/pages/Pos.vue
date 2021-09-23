@@ -17,8 +17,8 @@
                     <el-table-column prop="price" label="Price" width="70"></el-table-column>
                     <el-table-column label="action" width="100" fixed="right">
                       <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="addOrderList(scope.row)">Add</el-button>
-                        <el-button type="text" size="small">Min</el-button>
+                        <el-button type="text" size="big" @click="addOrderList(scope.row)">add</el-button>
+                        <el-button type="text" size="big" @click="delAArticle(scope.row)">min</el-button>
                       </template>
                     </el-table-column>
                 </el-table>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="order-status">
                   <el-button type="warning">Pending</el-button>
-                  <el-button type="danger">Del</el-button>
+                  <el-button type="danger" @click="delAllArticles">Del All</el-button>
                   <el-button type="success">Check out</el-button>
                 </div>
 
@@ -168,41 +168,76 @@ export default {
   },
   mounted:function(){
     var orderHeight=document.body.clientHeight;
-    console.log(orderHeight)
+    //console.log(orderHeight)
     document.getElementById("order-list").style.height=orderHeight+'px';
   },
   methods:{
-          addOrderList(articleObj){
-            this.totalQuantity=0; 
-            this.totalPrice=0;
-            let isHas=false;
-            for (let i=0; i<this.tableData.length;i++){
-                console.log(this.tableData[i].articleId);
-                if(this.tableData[i].articleId==articleObj.articleId){
-                    isHas=true; 
-                }
-            }
-            if(isHas){
-                 let arr = this.tableData.filter(o =>o.articleId == articleObj.articleId);
-                 arr[0].quantity++;
-                 console.log(arr); 
-            }else{
-                let newArticle={
-                  articleId:articleObj.articleId,
-                  articleName:articleObj.articleName,
-                  price:articleObj.price,
-                  quantity:1
-                };
-                this.tableData.push(newArticle);
-            }
+    addOrderList(articleObj){
 
-            this.tableData.forEach((element) => {
-                this.totalQuantity+=element.quantity;
-                this.totalPrice=this.totalPrice+(element.price*element.quantity);   
-            });
-
+      let isHas=false;
+      for (let i=0; i<this.tableData.length;i++){
+          //console.log(this.tableData[i].articleId);
+          if(this.tableData[i].articleId==articleObj.articleId){
+              isHas=true; 
+          }
       }
+      if(isHas){
+            let arr = this.tableData.filter(o =>o.articleId == articleObj.articleId);
+            arr[0].quantity++;
+            //console.log(arr); 
+      }else{
+          let newArticle={
+            articleId:articleObj.articleId,
+            articleName:articleObj.articleName,
+            price:articleObj.price,
+            quantity:1
+          };
+          this.tableData.push(newArticle);
+      }
+      this.getAll()
+    },
+    delAArticle(articleObj){
+      this.tableData=this.tableData.filter(o => {
+        return o.articleId!=articleObj.articleId
+      })
+      this.getAll()
+    },
+    delAllArticles(){
+      this.tableData=[];
+      this.totalQuantity=0;
+      this.totalPrice=0;
+    },
+    getAll(){
+      this.totalQuantity=0; 
+      this.totalPrice=0;
+      this.tableData.forEach((element) => {
+          this.totalQuantity+=element.quantity;
+          this.totalPrice=this.totalPrice+(element.price*element.quantity);   
+      });
+    }
+  },
+  computed:{
+    // totalQuantity:function(){
+    //   let totalQuantity=0;
 
+    //   if(this.tableData){
+    //       this.tableData.forEach((element) => {
+    //       totalQuantity+=element.quantity;
+    //     });
+    //   } 
+    //   return totalQuantity
+    // },
+    // totalPrice:function(){
+    //   let totalQuantity=0;
+    //   let totalPrice=0;
+    //   if(this.tableData){
+    //       this.tableData.forEach((element) => {
+    //       totalQuantity+=element.quantity;
+    //       totalPrice=totalPrice+(element.price*element.quantity);   
+    //     });
+    //   }
+    //   return totalPrice
+    // }
   }
 }
 </script>
